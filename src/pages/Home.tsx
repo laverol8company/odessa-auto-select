@@ -24,6 +24,7 @@ export default function Home() {
     if (budget !== "any") params.set("budget", budget);
     if (body !== "any") params.set("body", body);
     if (fuel !== "any") params.set("fuel", fuel);
+    if (use !== "any") params.set("use", use);
     window.location.href = `/catalog?${params.toString()}`;
   };
 

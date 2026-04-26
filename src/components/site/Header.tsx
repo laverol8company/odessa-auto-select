@@ -34,8 +34,8 @@ export function Header() {
     <header className="sticky top-0 z-40 bg-primary text-primary-foreground border-b border-white/10">
       <div className="container-px mx-auto max-w-7xl flex h-16 items-center gap-4">
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <span className="grid place-items-center h-8 w-8 rounded-md bg-cta text-cta-foreground font-bold">A</span>
-          <span className="font-semibold tracking-tight text-lg">Auto Odesa</span>
+          <span className="grid place-items-center h-8 w-8 rounded-md bg-cta text-cta-foreground font-bold text-xs">OA</span>
+          <span className="font-semibold tracking-tight text-lg">Odesa Auto Select</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-0 lg:gap-1 lg:mx-auto">
@@ -78,7 +78,7 @@ export function Header() {
           </SheetTrigger>
           <SheetContent side="right" className="w-[88vw] sm:w-96 p-0 bg-primary text-primary-foreground border-white/10">
             <div className="flex items-center justify-between p-4 border-b border-white/10">
-              <span className="font-semibold">Auto Odesa</span>
+              <span className="font-semibold">Odesa Auto Select</span>
               <button onClick={() => setOpen(false)} className="p-2 rounded-md hover:bg-white/5" aria-label={t.common.close}>
                 <X className="h-5 w-5" />
               </button>

@@ -38,6 +38,7 @@ export default function Catalog() {
     const body = searchParams.get("body");
     const fuel = searchParams.get("fuel");
     const budget = searchParams.get("budget");
+    const use = searchParams.get("use");
     if (cond === "new") next.newOrUsed = "new";
     if (cond === "used") next.newOrUsed = "used";
     if (body) next.body = body as Body;
@@ -46,6 +47,11 @@ export default function Catalog() {
       const [a, b] = budget.split("-");
       next.priceMin = a ?? ""; next.priceMax = b ?? "";
     }
+    // use-case from Quick Car Finder
+    if (use === "city") { next.body = next.body !== "any" ? next.body : "hatchback"; }
+    if (use === "family") { next.body = next.body !== "any" ? next.body : "suv"; }
+    if (use === "trips") { next.body = next.body !== "any" ? next.body : "suv"; }
+    if (use === "economy") { next.fuel = next.fuel !== "any" ? next.fuel : "hybrid"; }
     setF(next);
   }, [searchParams]);
 

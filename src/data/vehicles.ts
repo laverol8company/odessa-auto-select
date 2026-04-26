@@ -40,8 +40,8 @@ export interface Vehicle {
 }
 
 const benefitsCity = [
-  { en: "Easy parking in Odesa city center", uk: "Зручна паркова в центрі Одеси" },
-  { en: "Low fuel consumption for daily use", uk: "Низька витрата пального для щодня" },
+  { en: "Easy parking in Odesa city center", uk: "Зручно паркуватися в центрі Одеси" },
+  { en: "Low fuel consumption for daily use", uk: "Низька витрата пального для щоденного використання" },
   { en: "Comfortable for short and medium trips", uk: "Комфортне для коротких і середніх поїздок" },
 ];
 const benefitsFamily = [

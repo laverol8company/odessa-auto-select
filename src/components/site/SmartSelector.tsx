@@ -84,6 +84,26 @@ export function SmartSelector() {
     return list.slice(0, 4);
   }, [state]);
 
+  // Smart fallback: closest cars when no exact match
+  const similar = useMemo<Vehicle[]>(() => {
+    if (matched.length > 0) return [];
+    let pool = [...vehicles];
+    if (state.budget) {
+      const [min, max] = state.budget;
+      const byBudget = pool.filter(v => v.price >= min && v.price <= max);
+      if (byBudget.length > 0) pool = byBudget;
+    }
+    if (state.body && state.body !== "any") {
+      const byBody = pool.filter(v => v.body === state.body);
+      if (byBody.length > 0) pool = byBody;
+    }
+    if (state.fuel && state.fuel !== "any") {
+      const byFuel = pool.filter(v => v.fuel === state.fuel);
+      if (byFuel.length > 0) pool = byFuel;
+    }
+    return pool.slice(0, 3);
+  }, [matched, state]);
+
   const goNext = (next: Step) => { setStep(next); setError(null); };
 
   const submitLead = () => {
@@ -225,20 +245,39 @@ export function SmartSelector() {
           {step === "matched" && (
             <>
               <Bubble>{matched.length ? t.chat.matched : t.chat.noMatch}</Bubble>
-              <div className="space-y-2">
-                {matched.map(m => (
-                  <Link key={m.slug} to={`/catalog/${m.slug}`} onClick={close}
-                    className="flex gap-3 items-center p-2.5 rounded-lg border border-border hover:border-foreground/30">
-                    <img src={m.image} alt={`${m.brand} ${m.model}`} loading="lazy" width={120} height={84}
-                      className="h-14 w-20 object-cover rounded-md bg-muted" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">{m.brand} {m.model}</p>
-                      <p className="text-xs text-muted-foreground">{m.year} · {formatNumber(m.mileageKm, locale)} {t.common.km}</p>
-                    </div>
-                    <p className="text-sm font-semibold whitespace-nowrap">{formatPrice(m.price, locale)}</p>
-                  </Link>
-                ))}
-              </div>
+              {matched.length > 0 && (
+                <div className="space-y-2">
+                  {matched.map(m => (
+                    <Link key={m.slug} to={`/catalog/${m.slug}`} onClick={close}
+                      className="flex gap-3 items-center p-2.5 rounded-lg border border-border hover:border-foreground/30">
+                      <img src={m.image} alt={`${m.brand} ${m.model}`} loading="lazy" width={120} height={84}
+                        className="h-14 w-20 object-cover rounded-md bg-muted" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate">{m.brand} {m.model}</p>
+                        <p className="text-xs text-muted-foreground">{m.year} · {formatNumber(m.mileageKm, locale)} {t.common.km}</p>
+                      </div>
+                      <p className="text-sm font-semibold whitespace-nowrap">{formatPrice(m.price, locale)}</p>
+                    </Link>
+                  ))}
+                </div>
+              )}
+              {matched.length === 0 && similar.length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-xs text-muted-foreground">{t.chat.similarTitle}</p>
+                  {similar.map(m => (
+                    <Link key={m.slug} to={`/catalog/${m.slug}`} onClick={close}
+                      className="flex gap-3 items-center p-2.5 rounded-lg border border-border hover:border-foreground/30">
+                      <img src={m.image} alt={`${m.brand} ${m.model}`} loading="lazy" width={120} height={84}
+                        className="h-14 w-20 object-cover rounded-md bg-muted" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate">{m.brand} {m.model}</p>
+                        <p className="text-xs text-muted-foreground">{m.year} · {formatNumber(m.mileageKm, locale)} {t.common.km}</p>
+                      </div>
+                      <p className="text-sm font-semibold whitespace-nowrap">{formatPrice(m.price, locale)}</p>
+                    </Link>
+                  ))}
+                </div>
+              )}
               <div className="flex flex-col sm:flex-row gap-2 pt-1">
                 <Button variant="cta" className="flex-1" onClick={() => goNext("lead")}>{t.chat.sendToManager}</Button>
                 <Button variant="outline" className="flex-1" asChild onClick={close}>

@@ -16,8 +16,6 @@ export function Header() {
 
   const links = [
     { to: "/catalog", label: t.nav.buyCar },
-    { to: "/catalog?condition=used", label: t.nav.used },
-    { to: "/catalog?condition=new", label: t.nav.new },
     { to: "/financing", label: t.nav.financing },
     { to: "/trade-in", label: t.nav.tradeIn },
     { to: "/sell-your-car", label: t.nav.sell },
@@ -31,7 +29,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-primary text-primary-foreground border-b border-white/10">
+    <header className="sticky top-0 z-40 bg-primary text-primary-foreground border-b border-white/10 shadow-[0_4px_30px_-10px_rgba(71,142,235,0.15)]">
       <div className="container-px mx-auto max-w-7xl flex h-16 items-center gap-4">
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <span className="grid place-items-center h-8 w-8 rounded-md bg-cta text-cta-foreground font-bold text-xs">OA</span>

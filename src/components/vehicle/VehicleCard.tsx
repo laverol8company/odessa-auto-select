@@ -12,7 +12,7 @@ export function VehicleCard({ v }: { v: Vehicle }) {
   const { isFavorite, toggle } = useFavorites();
   const fav = isFavorite(v.slug);
   return (
-    <article className="group bg-card rounded-xl border border-border shadow-card overflow-hidden flex flex-col hover:shadow-elevated transition-shadow">
+    <article className="group card-premium flex flex-col">
       <div className="relative aspect-[16/11] overflow-hidden bg-muted">
         <Link to={`/catalog/${v.slug}`} aria-label={`${v.brand} ${v.model}`}>
           <img
@@ -24,6 +24,7 @@ export function VehicleCard({ v }: { v: Vehicle }) {
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </Link>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-50 group-hover:opacity-70 transition-opacity pointer-events-none" />
         <div className="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
           {v.badge && <VehicleBadge kind={v.badge} />}
           <ConditionPill condition={v.condition} />
@@ -34,7 +35,7 @@ export function VehicleCard({ v }: { v: Vehicle }) {
           aria-label={fav ? t.detail.removeFav : t.detail.saveFav}
           aria-pressed={fav}
           className={cn(
-            "absolute top-3 right-3 grid place-items-center h-9 w-9 rounded-full bg-card/90 backdrop-blur border border-border transition-colors",
+            "absolute top-3 right-3 grid place-items-center h-9 w-9 rounded-full glass transition-colors",
             fav ? "text-favorite" : "text-muted-foreground hover:text-foreground",
           )}
         >
@@ -50,7 +51,7 @@ export function VehicleCard({ v }: { v: Vehicle }) {
             </h3>
             <p className="text-sm text-muted-foreground">{v.year}</p>
           </div>
-          <p className="font-semibold text-base">{formatPrice(v.price, locale)}</p>
+          <p className="font-bold text-lg text-cta">{formatPrice(v.price, locale)}</p>
         </div>
 
         <ul className="grid grid-cols-3 gap-2 text-xs text-muted-foreground border-y border-border py-3">
@@ -60,7 +61,7 @@ export function VehicleCard({ v }: { v: Vehicle }) {
         </ul>
 
         <div className="mt-auto flex gap-2">
-          <Button asChild variant="outline" size="sm" className="flex-1">
+          <Button asChild variant="ghost" size="sm" className="flex-1 border border-border hover:bg-muted/50">
             <Link to={`/catalog/${v.slug}`}>{t.card.viewDetails}</Link>
           </Button>
           <Button asChild variant="cta" size="sm" className="flex-1">

@@ -37,15 +37,16 @@ export default function Home() {
       <section className="relative bg-primary text-white overflow-hidden">
         <img src={hero} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-50" width={1920} height={1080} />
         <div className="absolute inset-0 bg-gradient-overlay" />
-        <div className="relative container-px mx-auto max-w-7xl py-20 md:py-32">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cta/20 rounded-full blur-[100px] pointer-events-none mix-blend-screen" />
+        <div className="relative container-px mx-auto max-w-7xl py-14 md:py-32">
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur border border-white/15 text-xs font-medium px-3 py-1.5 mb-6">
               <MapPin className="h-3.5 w-3.5" /> {t.tagline}
             </span>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight leading-[1.05]">{t.home.heroTitle}</h1>
             <p className="mt-5 text-base md:text-lg text-white/75 max-w-2xl leading-relaxed">{t.home.heroSub}</p>
-            <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
-              <Button asChild variant="cta" size="xl" className="w-full sm:w-auto"><Link to="/catalog">{t.home.ctaViewCars}</Link></Button>
+            <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-4">
+              <Button asChild variant="cta" size="xl" className="w-full sm:w-auto shadow-none glow-cta"><Link to="/catalog">{t.home.ctaViewCars}</Link></Button>
               <Button variant="ctaOutline" size="xl" onClick={open} className="w-full sm:w-auto">{t.home.ctaGetOptions}</Button>
             </div>
             <ul className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
@@ -63,9 +64,10 @@ export default function Home() {
       </section>
 
       {/* Quick finder */}
-      <section className="container-px mx-auto max-w-7xl -mt-12 relative z-10">
-        <div className="bg-card rounded-2xl border border-border shadow-elevated p-5 md:p-7">
-          <div className="flex flex-col md:flex-row md:items-end gap-5 md:gap-4">
+      <section className="container-px mx-auto max-w-7xl -mt-12 relative z-10 mb-8 md:mb-16">
+        <div className="glass rounded-3xl p-5 md:p-7 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-cta/10 rounded-full blur-[60px] pointer-events-none" />
+          <div className="relative flex flex-col md:flex-row md:items-end gap-5 md:gap-4">
             <div className="md:flex-1">
               <h2 className="text-xl md:text-2xl font-semibold">{t.home.finderTitle}</h2>
               <p className="text-sm text-muted-foreground mt-1">{t.home.finderSub}</p>
@@ -163,7 +165,7 @@ export default function Home() {
               { i: Heart, l: t.home.how3 },
               { i: Calendar, l: t.home.how4 },
             ].map(({ i: Icon, l }, idx) => (
-              <li key={l} className="bg-card rounded-xl border border-border p-6 shadow-card">
+              <li key={l} className="card-premium p-6 opacity-90 hover:opacity-100">
                 <div className="flex items-center justify-between mb-4">
                   <span className="grid place-items-center h-10 w-10 rounded-lg bg-cta/10 text-cta"><Icon className="h-5 w-5" /></span>
                   <span className="text-xs font-semibold text-muted-foreground">0{idx + 1}</span>
@@ -187,7 +189,7 @@ export default function Home() {
             { to: "/trade-in", title: t.home.servicesTradeTitle, desc: t.home.servicesTradeDesc, icon: Repeat },
             { to: "/sell-your-car", title: t.home.servicesSellTitle, desc: t.home.servicesSellDesc, icon: Calendar },
           ].map(({ to, title, desc, icon: Icon }) => (
-            <Link key={to} to={to} className="group bg-card rounded-xl border border-border p-7 shadow-card hover:shadow-elevated transition-shadow">
+            <Link key={to} to={to} className="group card-premium p-7 flex flex-col items-start border-l-4 border-l-transparent hover:border-l-cta bg-gradient-to-br hover:from-card hover:to-muted/30">
               <span className="grid place-items-center h-11 w-11 rounded-lg bg-primary text-primary-foreground"><Icon className="h-5 w-5" /></span>
               <h3 className="mt-4 font-semibold text-lg">{title}</h3>
               <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{desc}</p>
@@ -209,7 +211,7 @@ export default function Home() {
               { t: t.home.trust2Title, d: t.home.trust2Desc, i: MapPin },
               { t: t.home.trust3Title, d: t.home.trust3Desc, i: Heart },
             ].map(({ t: title, d, i: Icon }) => (
-              <div key={title} className="bg-card rounded-xl border border-border p-6 shadow-card">
+              <div key={title} className="card-premium p-6 flex flex-col items-start">
                 <span className="grid place-items-center h-10 w-10 rounded-lg bg-success/10 text-success"><Icon className="h-5 w-5" /></span>
                 <h3 className="mt-4 font-semibold">{title}</h3>
                 <p className="text-sm text-muted-foreground mt-1.5 leading-relaxed">{d}</p>
@@ -221,8 +223,9 @@ export default function Home() {
 
       {/* Final CTA */}
       <section className="container-px mx-auto max-w-7xl section-y">
-        <div className="rounded-2xl bg-gradient-dark text-white p-10 md:p-16 shadow-premium">
-          <div className="max-w-2xl">
+        <div className="relative rounded-3xl bg-gradient-glass text-white p-10 md:p-16 shadow-premium overflow-hidden border border-white/10 glass">
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-cta/20 rounded-full blur-[80px] pointer-events-none" />
+          <div className="relative max-w-2xl">
             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">{t.home.finalTitle}</h2>
             <p className="mt-3 text-white/75 leading-relaxed">{t.home.finalSub}</p>
             <div className="mt-7 flex flex-wrap gap-3">

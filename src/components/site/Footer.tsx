@@ -10,9 +10,9 @@ export function Footer() {
     <footer className="bg-primary text-white/80 mt-20 pb-24 md:pb-0">
       <div className="container-px mx-auto max-w-7xl py-14 grid gap-10 md:grid-cols-12">
         <div className="md:col-span-4 space-y-4">
-          <div className="flex items-center gap-2">
-            <span className="grid place-items-center h-8 w-8 rounded-md bg-cta text-cta-foreground font-bold text-xs">OA</span>
-            <span className="font-semibold text-white text-lg">Odesa Auto Select</span>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="grid place-items-center h-8 w-8 rounded-full bg-gradient-to-tr from-white/10 to-white/5 border border-white/20 text-white font-bold text-xs shadow-[0_0_15px_rgba(255,255,255,0.1)]">GC</span>
+            <span className="font-semibold text-white text-lg tracking-tight">General Cars</span>
           </div>
           <p className="text-sm leading-relaxed text-white/70">{t.footer.desc}</p>
           <LanguageSwitcher variant="dark" />
@@ -53,7 +53,7 @@ export function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-px mx-auto max-w-7xl py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-white/50">
-          <p>© {new Date().getFullYear()} Odesa Auto Select. {t.footer.rights}</p>
+          <p>© {new Date().getFullYear()} General Cars v2. {t.footer.rights}</p>
           <div className="flex items-center gap-4">
             <Link to="/privacy" className="hover:text-white">{t.footer.privacy}</Link>
             <Link to="/terms" className="hover:text-white">{t.footer.terms}</Link>

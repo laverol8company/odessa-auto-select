@@ -229,7 +229,7 @@ export default function Catalog() {
 
   return (
     <>
-      <SEO title={`${t.catalog.title} | Odesa Auto Select`} description={t.catalog.sub} />
+      <SEO title={`${t.catalog.title} | General Cars`} description={t.catalog.sub} />
       <section className="bg-primary text-white">
         <div className="container-px mx-auto max-w-7xl py-12 md:py-16">
           <h1 className="text-3xl md:text-4xl font-semibold">{t.catalog.title}</h1>

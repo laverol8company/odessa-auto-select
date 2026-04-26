@@ -139,7 +139,7 @@ export function SmartSelector() {
 
   return (
     <Dialog open={isOpen} onOpenChange={(o) => !o && close()}>
-      <DialogContent className="p-0 max-w-md w-[calc(100%-1.5rem)] gap-0 glass rounded-[2rem] overflow-hidden border-white/10 shadow-premium">
+      <DialogContent className="p-0 max-w-md w-[calc(100%-1.5rem)] gap-0 backdrop-blur-2xl bg-black/60 border border-white/10 rounded-[2rem] overflow-hidden shadow-[0_0_50px_-10px_rgba(0,0,0,0.5)]">
         <header className="relative px-6 py-5 border-b border-white/5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -163,7 +163,7 @@ export function SmartSelector() {
           )}
         </header>
 
-        <div className="p-6 max-h-[65vh] overflow-y-auto space-y-6 scroll-smooth bg-card/40">
+        <div className="p-6 max-h-[65vh] overflow-y-auto space-y-6 scroll-smooth bg-transparent">
           {step === "goal" && (
             <>
               <Bubble>{t.chat.opening}</Bubble>

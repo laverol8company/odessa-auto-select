@@ -10,7 +10,7 @@ export default function Privacy() {
   ] as const;
   return (
     <>
-      <SEO title={`${t.privacy.title} | Odesa Auto Select`} description={t.privacy.title} />
+      <SEO title={`${t.privacy.title} | General Cars`} description={t.privacy.title} />
       <div className="container-px mx-auto max-w-3xl py-14">
         <h1 className="text-3xl font-semibold">{t.privacy.title}</h1>
         <p className="text-sm text-muted-foreground mt-1">{t.privacy.updated}</p>

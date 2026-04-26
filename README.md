@@ -1,6 +1,6 @@
-# Odesa Auto Select
+# General Cars
 
-Odesa Auto Select is a premium car dealership platform for browsing, filtering, and trading vehicles.
+General Cars is a premium car dealership platform for browsing, filtering, and trading vehicles.
 
 ## Development
 

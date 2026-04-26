@@ -31,9 +31,9 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-primary text-primary-foreground border-b border-white/10 shadow-[0_4px_30px_-10px_rgba(71,142,235,0.15)]">
       <div className="container-px mx-auto max-w-7xl flex h-16 items-center gap-4">
-        <Link to="/" className="flex items-center gap-2 shrink-0">
-          <span className="grid place-items-center h-8 w-8 rounded-md bg-cta text-cta-foreground font-bold text-xs">OA</span>
-          <span className="font-semibold tracking-tight text-lg">Odesa Auto Select</span>
+        <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
+          <span className="grid place-items-center h-8 w-8 rounded-full bg-gradient-to-tr from-white/10 to-white/5 border border-white/20 text-white font-bold text-xs shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:border-white/40 transition-all">GC</span>
+          <span className="font-semibold tracking-tight text-lg text-white">General Cars</span>
         </Link>
 
         <nav className="hidden lg:flex items-center gap-0 lg:gap-1 lg:mx-auto">
@@ -75,11 +75,11 @@ export function Header() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[88vw] sm:w-96 p-0 bg-primary text-primary-foreground border-white/10">
-            <div className="flex items-center justify-between p-4 border-b border-white/10">
-              <span className="font-semibold">Odesa Auto Select</span>
-              <button onClick={() => setOpen(false)} className="p-2 rounded-md hover:bg-white/5" aria-label={t.common.close}>
-                <X className="h-5 w-5" />
-              </button>
+            <div className="flex items-center p-5 pt-6 pb-4 border-b border-white/10">
+              <span className="flex items-center gap-2 shrink-0">
+                <span className="grid place-items-center h-8 w-8 rounded-full bg-gradient-to-tr from-white/10 to-white/5 border border-white/20 text-white font-bold text-xs">GC</span>
+                <span className="font-semibold tracking-tight text-lg text-white">General Cars</span>
+              </span>
             </div>
             <nav className="p-2">
               {links.map((l) => (

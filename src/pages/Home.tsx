@@ -32,17 +32,21 @@ export default function Home() {
 
   return (
     <>
-      <SEO title={`Odesa Auto Select | ${t.home.heroTitle}`} description={t.home.heroSub} />
+      <SEO title={`General Cars | ${t.home.heroTitle}`} description={t.home.heroSub} />
 
       {/* ══════════════ HERO ══════════════ */}
       <section className="relative bg-primary text-white overflow-hidden min-h-[580px] md:min-h-[680px] flex items-center">
         {/* Background image */}
         <img src={hero} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-40" width={1920} height={1080} />
-        {/* Cinematic overlay */}
-        <div className="hero-overlay absolute inset-0" />
-        {/* Blue radial glow */}
-        <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-cta/15 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-cta/10 rounded-full blur-[80px] pointer-events-none" />
+        {/* Subtle moving cinematic gradient over the image */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-black/90 via-primary/70 to-blue-900/30 object-cover" />
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-cta/10 rounded-full blur-[140px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none animate-pulse" style={{ animationDuration: '10s' }} />
+        
+        {/* Cinematic light sweep */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 bottom-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-showroom-sweep mix-blend-overlay" />
+        </div>
 
         <div className="relative container-px mx-auto max-w-7xl py-20 md:py-32 w-full">
           <div className="max-w-2xl">
@@ -61,17 +65,19 @@ export default function Home() {
               {t.home.heroSub}
             </p>
 
-            {/* CTA group — clear hierarchy */}
-            <div className="mt-10 flex flex-col sm:flex-row gap-3">
-              <Button asChild variant="cta" size="xl" className="w-full sm:w-auto glow-cta rounded-full font-semibold tracking-tight">
+            {/* CTA group — premium hierarchy */}
+            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+              <Button asChild variant="cta" size="xl" className="w-full sm:w-auto bg-cta text-white glow-cta rounded-full font-semibold tracking-tight shadow-[0_0_30px_-5px_rgba(71,142,235,0.4)] transition-all hover:shadow-[0_0_40px_0px_rgba(71,142,235,0.6)]">
                 <Link to="/catalog">
-                  <Car className="h-4 w-4 mr-1.5" />
+                  <Car className="h-4 w-4 mr-2" />
                   {t.home.ctaViewCars}
                 </Link>
               </Button>
-              <Button variant="ctaOutline" size="xl" onClick={open} className="w-full sm:w-auto rounded-full">
-                <Sparkles className="h-4 w-4 mr-1.5" />
-                {t.home.ctaGetOptions}
+              <Button asChild variant="outline" size="xl" onClick={open} className="w-full sm:w-auto rounded-full bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:text-white backdrop-blur-md transition-all cursor-pointer">
+                <a>
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  {t.home.ctaGetOptions}
+                </a>
               </Button>
             </div>
 
@@ -95,7 +101,7 @@ export default function Home() {
 
       {/* ══════════════ QUICK CAR FINDER ══════════════ */}
       <section className="container-px mx-auto max-w-7xl -mt-14 relative z-10">
-        <div className="glass-light rounded-3xl p-5 md:p-8 shadow-elevated">
+        <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-[2rem] p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
           <div className="mb-5">
             <h2 className="text-xl md:text-2xl font-semibold">{t.home.finderTitle}</h2>
             <p className="text-sm text-muted-foreground mt-1">{t.home.finderSub}</p>

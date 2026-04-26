@@ -2,7 +2,7 @@ export type Locale = "en" | "uk";
 
 export const translations = {
   en: {
-    brand: "Odesa Auto Select",
+    brand: "General Cars",
     tagline: "Premium Car Dealership in Odesa",
     nav: {
       buyCar: "Buy a Car",
@@ -353,7 +353,7 @@ export const translations = {
     },
   },
   uk: {
-    brand: "Odesa Auto Select",
+    brand: "General Cars",
     tagline: "Преміальний автосалон в Одесі",
     nav: {
       buyCar: "Купити авто",

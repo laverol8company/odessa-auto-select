@@ -11,8 +11,8 @@ export function Footer() {
       <div className="container-px mx-auto max-w-7xl py-14 grid gap-10 md:grid-cols-12">
         <div className="md:col-span-4 space-y-4">
           <div className="flex items-center gap-2">
-            <span className="grid place-items-center h-8 w-8 rounded-md bg-cta text-cta-foreground font-bold">A</span>
-            <span className="font-semibold text-white text-lg">Auto Odesa</span>
+            <span className="grid place-items-center h-8 w-8 rounded-md bg-cta text-cta-foreground font-bold text-xs">OA</span>
+            <span className="font-semibold text-white text-lg">Odesa Auto Select</span>
           </div>
           <p className="text-sm leading-relaxed text-white/70">{t.footer.desc}</p>
           <LanguageSwitcher variant="dark" />
@@ -53,7 +53,7 @@ export function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-px mx-auto max-w-7xl py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-white/50">
-          <p>© {new Date().getFullYear()} Auto Odesa. {t.footer.rights}</p>
+          <p>© {new Date().getFullYear()} Odesa Auto Select. {t.footer.rights}</p>
           <div className="flex items-center gap-4">
             <Link to="/privacy" className="hover:text-white">{t.footer.privacy}</Link>
             <Link to="/terms" className="hover:text-white">{t.footer.terms}</Link>

@@ -11,7 +11,7 @@ export default function Terms() {
   ] as const;
   return (
     <>
-      <SEO title={`${t.terms.title} — Auto Odesa`} description={t.terms.title} />
+      <SEO title={`${t.terms.title} | Odesa Auto Select`} description={t.terms.title} />
       <div className="container-px mx-auto max-w-3xl py-14">
         <h1 className="text-3xl font-semibold">{t.terms.title}</h1>
         <p className="text-sm text-muted-foreground mt-1">{t.terms.updated}</p>

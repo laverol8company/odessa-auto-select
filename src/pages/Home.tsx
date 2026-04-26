@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <>
-      <SEO title={`Auto Odesa — ${t.home.heroTitle}`} description={t.home.heroSub} />
+      <SEO title={`Odesa Auto Select | ${t.home.heroTitle}`} description={t.home.heroSub} />
       {/* Hero */}
       <section className="relative bg-primary text-white overflow-hidden">
         <img src={hero} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-50" width={1920} height={1080} />

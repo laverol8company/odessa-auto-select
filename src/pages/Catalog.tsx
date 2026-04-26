@@ -12,91 +12,58 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { SlidersHorizontal, X } from "lucide-react";
 
-interface Filters {
+export interface Filters {
   brand: string; model: string; year: string; mileageMax: string;
   priceMin: string; priceMax: string;
   trans: Transmission | "any"; fuel: Fuel | "any"; body: Body | "any"; condition: Condition | "any";
   newOrUsed: "any" | "new" | "used";
 }
 
-const empty: Filters = {
+export const emptyFilters: Filters = {
   brand: "any", model: "any", year: "any", mileageMax: "any",
   priceMin: "", priceMax: "",
   trans: "any", fuel: "any", body: "any", condition: "any", newOrUsed: "any",
 };
 
-export default function Catalog() {
-  const { t, locale } = useLocale();
-  const { open } = useChat();
-  const [searchParams] = useSearchParams();
-  const [f, setF] = useState<Filters>(empty);
-  const [sort, setSort] = useState("newest");
+interface FilterPanelProps {
+  f: Filters;
+  setF: React.Dispatch<React.SetStateAction<Filters>>;
+  reset: () => void;
+  modelOptions: string[];
+  inSheet?: boolean;
+}
 
-  useEffect(() => {
-    const next = { ...empty };
-    const cond = searchParams.get("condition");
-    const body = searchParams.get("body");
-    const fuel = searchParams.get("fuel");
-    const budget = searchParams.get("budget");
-    const use = searchParams.get("use");
-    if (cond === "new") next.newOrUsed = "new";
-    if (cond === "used") next.newOrUsed = "used";
-    if (body) next.body = body as Body;
-    if (fuel) next.fuel = fuel as Fuel;
-    if (budget) {
-      const [a, b] = budget.split("-");
-      next.priceMin = a ?? ""; next.priceMax = b ?? "";
-    }
-    // use-case from Quick Car Finder
-    if (use === "city") { next.body = next.body !== "any" ? next.body : "hatchback"; }
-    if (use === "family") { next.body = next.body !== "any" ? next.body : "suv"; }
-    if (use === "trips") { next.body = next.body !== "any" ? next.body : "suv"; }
-    if (use === "economy") { next.fuel = next.fuel !== "any" ? next.fuel : "hybrid"; }
-    setF(next);
-  }, [searchParams]);
-
-  const modelOptions = useMemo(() => {
-    if (f.brand === "any") return [];
-    return Array.from(new Set(vehicles.filter(v => v.brand === f.brand).map(v => v.model))).sort();
-  }, [f.brand]);
-
-  const filtered = useMemo(() => {
-    let list = vehicles.filter(v => {
-      if (f.brand !== "any" && v.brand !== f.brand) return false;
-      if (f.model !== "any" && v.model !== f.model) return false;
-      if (f.year !== "any" && v.year < Number(f.year)) return false;
-      if (f.mileageMax !== "any" && v.mileageKm > Number(f.mileageMax)) return false;
-      if (f.priceMin && v.price < Number(f.priceMin)) return false;
-      if (f.priceMax && v.price > Number(f.priceMax)) return false;
-      if (f.trans !== "any" && v.transmission !== f.trans) return false;
-      if (f.fuel !== "any" && v.fuel !== f.fuel) return false;
-      if (f.body !== "any" && v.body !== f.body) return false;
-      if (f.condition !== "any" && v.condition !== f.condition) return false;
-      if (f.newOrUsed === "new" && !v.isNew) return false;
-      if (f.newOrUsed === "used" && v.isNew) return false;
-      return true;
-    });
-    switch (sort) {
-      case "price_asc": list.sort((a, b) => a.price - b.price); break;
-      case "price_desc": list.sort((a, b) => b.price - a.price); break;
-      case "mileage_asc": list.sort((a, b) => a.mileageKm - b.mileageKm); break;
-      default: list.sort((a, b) => b.year - a.year);
-    }
-    return list;
-  }, [f, sort]);
-
-  const reset = () => setF(empty);
-
-  const FilterPanel = ({ inSheet = false }: { inSheet?: boolean }) => (
+// IMPORTANT: FilterPanel is defined OUTSIDE Catalog() to prevent remount on every state update.
+// Defining it inside Catalog() caused React to recreate the component on every setF() call,
+// causing inputs to lose focus after the first keystroke.
+function FilterPanel({ f, setF, reset, modelOptions, inSheet = false }: FilterPanelProps) {
+  const { t } = useLocale();
+  return (
     <div className={inSheet ? "p-5 space-y-4" : "space-y-4"}>
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <Label className="text-xs">{t.common.price} ($)</Label>
-          <div className="flex gap-2 mt-1.5">
-            <Input type="number" inputMode="numeric" placeholder={t.common.from} value={f.priceMin} onChange={e => setF(s => ({ ...s, priceMin: e.target.value }))} />
-            <Input type="number" inputMode="numeric" placeholder="—" value={f.priceMax} onChange={e => setF(s => ({ ...s, priceMax: e.target.value }))} />
-          </div>
+      {/* Price range */}
+      <div>
+        <Label className="text-xs">{t.common.price} ($)</Label>
+        <div className="flex items-center gap-2 mt-1.5">
+          <Input
+            type="text"
+            inputMode="numeric"
+            placeholder={t.common.from}
+            value={f.priceMin}
+            onChange={e => setF(s => ({ ...s, priceMin: e.target.value }))}
+          />
+          <span className="text-muted-foreground shrink-0 text-sm font-medium">–</span>
+          <Input
+            type="text"
+            inputMode="numeric"
+            placeholder="max"
+            value={f.priceMax}
+            onChange={e => setF(s => ({ ...s, priceMax: e.target.value }))}
+          />
         </div>
+      </div>
+
+      {/* Grid of select filters */}
+      <div className="grid grid-cols-2 gap-3">
         <div>
           <Label className="text-xs">{t.common.brand}</Label>
           <Select value={f.brand} onValueChange={v => setF(s => ({ ...s, brand: v, model: "any" }))}>
@@ -196,10 +163,73 @@ export default function Catalog() {
       <Button type="button" variant="ghost" size="sm" onClick={reset} className="w-full"><X className="h-4 w-4" />{t.common.reset}</Button>
     </div>
   );
+}
+
+export default function Catalog() {
+  const { t, locale } = useLocale();
+  const { open } = useChat();
+  const [searchParams] = useSearchParams();
+  const [f, setF] = useState<Filters>(emptyFilters);
+  const [sort, setSort] = useState("newest");
+
+  useEffect(() => {
+    const next = { ...emptyFilters };
+    const cond = searchParams.get("condition");
+    const body = searchParams.get("body");
+    const fuel = searchParams.get("fuel");
+    const budget = searchParams.get("budget");
+    const use = searchParams.get("use");
+    if (cond === "new") next.newOrUsed = "new";
+    if (cond === "used") next.newOrUsed = "used";
+    if (body) next.body = body as Body;
+    if (fuel) next.fuel = fuel as Fuel;
+    if (budget) {
+      const [a, b] = budget.split("-");
+      next.priceMin = a ?? ""; next.priceMax = b ?? "";
+    }
+    // use-case from Quick Car Finder
+    if (use === "city") { next.body = next.body !== "any" ? next.body : "hatchback"; }
+    if (use === "family") { next.body = next.body !== "any" ? next.body : "suv"; }
+    if (use === "trips") { next.body = next.body !== "any" ? next.body : "suv"; }
+    if (use === "economy") { next.fuel = next.fuel !== "any" ? next.fuel : "hybrid"; }
+    setF(next);
+  }, [searchParams]);
+
+  const modelOptions = useMemo(() => {
+    if (f.brand === "any") return [];
+    return Array.from(new Set(vehicles.filter(v => v.brand === f.brand).map(v => v.model))).sort();
+  }, [f.brand]);
+
+  const filtered = useMemo(() => {
+    let list = vehicles.filter(v => {
+      if (f.brand !== "any" && v.brand !== f.brand) return false;
+      if (f.model !== "any" && v.model !== f.model) return false;
+      if (f.year !== "any" && v.year < Number(f.year)) return false;
+      if (f.mileageMax !== "any" && v.mileageKm > Number(f.mileageMax)) return false;
+      if (f.priceMin && v.price < Number(f.priceMin)) return false;
+      if (f.priceMax && v.price > Number(f.priceMax)) return false;
+      if (f.trans !== "any" && v.transmission !== f.trans) return false;
+      if (f.fuel !== "any" && v.fuel !== f.fuel) return false;
+      if (f.body !== "any" && v.body !== f.body) return false;
+      if (f.condition !== "any" && v.condition !== f.condition) return false;
+      if (f.newOrUsed === "new" && !v.isNew) return false;
+      if (f.newOrUsed === "used" && v.isNew) return false;
+      return true;
+    });
+    switch (sort) {
+      case "price_asc": list.sort((a, b) => a.price - b.price); break;
+      case "price_desc": list.sort((a, b) => b.price - a.price); break;
+      case "mileage_asc": list.sort((a, b) => a.mileageKm - b.mileageKm); break;
+      default: list.sort((a, b) => b.year - a.year);
+    }
+    return list;
+  }, [f, sort]);
+
+  const reset = () => setF(emptyFilters);
 
   return (
     <>
-      <SEO title={`${t.catalog.title} — Auto Odesa`} description={t.catalog.sub} />
+      <SEO title={`${t.catalog.title} | Odesa Auto Select`} description={t.catalog.sub} />
       <section className="bg-primary text-white">
         <div className="container-px mx-auto max-w-7xl py-12 md:py-16">
           <h1 className="text-3xl md:text-4xl font-semibold">{t.catalog.title}</h1>
@@ -211,7 +241,7 @@ export default function Catalog() {
         <aside className="hidden lg:block">
           <div className="bg-card rounded-xl border border-border p-5 shadow-card sticky top-20">
             <h2 className="font-semibold mb-4 flex items-center gap-2"><SlidersHorizontal className="h-4 w-4" />{t.common.filters}</h2>
-            <FilterPanel />
+            <FilterPanel f={f} setF={setF} reset={reset} modelOptions={modelOptions} />
           </div>
         </aside>
 
@@ -225,7 +255,7 @@ export default function Catalog() {
                 </SheetTrigger>
                 <SheetContent side="bottom" className="h-[85vh] overflow-y-auto p-0">
                   <SheetHeader className="p-5 border-b border-border"><SheetTitle>{t.common.filters}</SheetTitle></SheetHeader>
-                  <FilterPanel inSheet />
+                  <FilterPanel f={f} setF={setF} reset={reset} modelOptions={modelOptions} inSheet />
                 </SheetContent>
               </Sheet>
               <Select value={sort} onValueChange={setSort}>

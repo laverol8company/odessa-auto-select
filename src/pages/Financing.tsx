@@ -11,7 +11,7 @@ export default function Financing() {
   const carLabel = car ? `${car.brand} ${car.model} ${car.year}` : "";
   return (
     <>
-      <SEO title={`${t.financing.title} — Auto Odesa`} description={t.financing.sub} />
+      <SEO title={`${t.financing.title} | Odesa Auto Select`} description={t.financing.sub} />
       <section className="bg-primary text-white">
         <div className="container-px mx-auto max-w-7xl py-12 md:py-16">
           <h1 className="text-3xl md:text-4xl font-semibold max-w-3xl">{t.financing.title}</h1>

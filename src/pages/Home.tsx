@@ -8,8 +8,8 @@ import { useChat } from "@/context/ChatContext";
 import { vehicles } from "@/data/vehicles";
 import { VehicleCard } from "@/components/vehicle/VehicleCard";
 import { SEO } from "@/components/site/SiteLayout";
-import { ShieldCheck, Wallet, Repeat, MapPin, ArrowRight, Search, Heart, Calendar, Car, Sparkles, ChevronRight } from "lucide-react";
-import hero from "@/assets/hero.jpg";
+import { HeroSlideshow } from "@/components/site/HeroSlideshow";
+import { ShieldCheck, Wallet, Repeat, MapPin, ArrowRight, Search, Heart, Calendar, Car, Sparkles, ChevronRight, MessageCircle } from "lucide-react";
 
 export default function Home() {
   const { t } = useLocale();
@@ -35,23 +35,19 @@ export default function Home() {
       <SEO title={`General Cars | ${t.home.heroTitle}`} description={t.home.heroSub} />
 
       {/* ══════════════ HERO ══════════════ */}
-      <section className="relative bg-primary text-white overflow-hidden min-h-[580px] md:min-h-[680px] flex items-center">
-        {/* Background image */}
-        <img src={hero} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-40" width={1920} height={1080} />
-        {/* Subtle moving cinematic gradient over the image */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-black/90 via-primary/70 to-blue-900/30 object-cover" />
-        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-cta/10 rounded-full blur-[140px] pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] pointer-events-none animate-pulse" style={{ animationDuration: '10s' }} />
-        
-        {/* Cinematic light sweep */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 bottom-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-showroom-sweep mix-blend-overlay" />
+      <section className="relative bg-primary text-white overflow-hidden min-h-[600px] md:min-h-[720px] flex items-center">
+        {/* ── Animated automotive slideshow (Ken Burns + crossfade) ── */}
+        <HeroSlideshow />
+
+        {/* Cinematic light sweep accent on top of slides */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-[1]">
+          <div className="absolute top-0 bottom-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/6 to-transparent animate-showroom-sweep mix-blend-overlay" />
         </div>
 
-        <div className="relative container-px mx-auto max-w-7xl py-20 md:py-32 w-full">
+        <div className="relative z-10 container-px mx-auto max-w-7xl py-24 md:py-36 w-full">
           <div className="max-w-2xl">
-            {/* Premium badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 backdrop-blur-md text-xs font-semibold px-4 py-1.5 mb-8 text-silver tracking-wide uppercase">
+            {/* Premium location badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/8 backdrop-blur-md text-xs font-semibold px-4 py-1.5 mb-8 text-silver tracking-wide uppercase">
               <MapPin className="h-3 w-3 text-cta" />
               {t.tagline}
             </div>
@@ -61,23 +57,30 @@ export default function Home() {
               <span className="text-gradient-white">{t.home.heroTitle}</span>
             </h1>
 
-            <p className="mt-6 text-base md:text-lg text-white/65 max-w-xl leading-relaxed">
+            <p className="mt-6 text-base md:text-lg text-white/70 max-w-xl leading-relaxed drop-shadow-sm">
               {t.home.heroSub}
             </p>
 
-            {/* CTA group — premium hierarchy */}
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <Button asChild variant="cta" size="xl" className="w-full sm:w-auto bg-cta text-white glow-cta rounded-full font-semibold tracking-tight shadow-[0_0_30px_-5px_rgba(71,142,235,0.4)] transition-all hover:shadow-[0_0_40px_0px_rgba(71,142,235,0.6)]">
+            {/* ── CTA hierarchy: Primary → Secondary → Tertiary ── */}
+            <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-3">
+              {/* PRIMARY – View Cars */}
+              <Button asChild variant="cta" size="xl" className="w-full sm:w-auto bg-cta text-white glow-cta rounded-full font-semibold tracking-tight shadow-[0_0_32px_-4px_rgba(71,142,235,0.5)] transition-all hover:shadow-[0_0_44px_0px_rgba(71,142,235,0.7)] hover:scale-[1.02] active:scale-[0.98]">
                 <Link to="/catalog">
                   <Car className="h-4 w-4 mr-2" />
                   {t.home.ctaViewCars}
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="xl" onClick={open} className="w-full sm:w-auto rounded-full bg-white/5 border border-white/20 text-white hover:bg-white/10 hover:text-white backdrop-blur-md transition-all cursor-pointer">
-                <a>
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  {t.home.ctaGetOptions}
-                </a>
+              {/* SECONDARY – Get Car Options */}
+              <Button size="xl" onClick={open} className="w-full sm:w-auto rounded-full bg-white/10 border border-white/25 text-white hover:bg-white/18 backdrop-blur-md transition-all cursor-pointer font-medium">
+                <Sparkles className="h-4 w-4 mr-2" />
+                {t.home.ctaGetOptions}
+              </Button>
+              {/* TERTIARY – Talk to Expert */}
+              <Button asChild size="lg" className="w-full sm:w-auto rounded-full bg-transparent border border-white/15 text-white/70 hover:text-white hover:border-white/30 hover:bg-white/5 transition-all cursor-pointer font-normal tracking-wide text-sm">
+                <Link to="/contact">
+                  <MessageCircle className="h-3.5 w-3.5 mr-2" />
+                  {t.nav?.contact ?? "Talk to an Expert"}
+                </Link>
               </Button>
             </div>
 

@@ -204,3 +204,50 @@
 .animate-showroom-sweep {
   animation: showroom-sweep 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
+
+/* ── Hero Slideshow ── */
+.hero-slide-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  will-change: transform;
+  filter: brightness(0.82) contrast(1.05) saturate(0.95);
+}
+
+/* Ken Burns variant 1 – gentle zoom in from center */
+@keyframes kb-zoom-in-center {
+  0%   { transform: scale(1.12) translate(0%, 0%); }
+  100% { transform: scale(1.0)  translate(0%, 0%); }
+}
+.kb-zoom-in-center { animation: kb-zoom-in-center 8s ease-out forwards; }
+
+/* Ken Burns variant 2 – slow pan right while slightly zoomed */
+@keyframes kb-pan-right {
+  0%   { transform: scale(1.08) translate(-3%, 0%); }
+  100% { transform: scale(1.0)  translate(2%, 0%); }
+}
+.kb-pan-right { animation: kb-pan-right 8s ease-out forwards; }
+
+/* Ken Burns variant 3 – zoom in from left */
+@keyframes kb-zoom-in-left {
+  0%   { transform: scale(1.14) translate(2%, 1%); }
+  100% { transform: scale(1.0)  translate(0%, 0%); }
+}
+.kb-zoom-in-left { animation: kb-zoom-in-left 8s ease-out forwards; }
+
+/* Ken Burns variant 4 – slow pan left */
+@keyframes kb-pan-left {
+  0%   { transform: scale(1.08) translate(3%, 0%); }
+  100% { transform: scale(1.0)  translate(-2%, 0%); }
+}
+.kb-pan-left { animation: kb-pan-left 8s ease-out forwards; }
+
+/* Ken Burns variant 5 – zoom out from center */
+@keyframes kb-zoom-out-center {
+  0%   { transform: scale(1.0)  translate(0%, 0%); }
+  100% { transform: scale(1.1)  translate(0%, -1%); }
+}
+.kb-zoom-out-center { animation: kb-zoom-out-center 8s ease-out forwards; }

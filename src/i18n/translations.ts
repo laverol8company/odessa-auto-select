@@ -703,7 +703,6 @@ export const translations = {
       s7: "З будь-яких питань щодо умов зв’яжіться через сторінку Контакти.",
     },
   },
-  },
   ro: {
     brand: "General cars",
     tagline: "Dealer Auto Premium în Odesa",

@@ -41,7 +41,7 @@ export default function VehicleDetail() {
 
   return (
     <>
-      <SEO title={`${v.brand} ${v.model} ${v.year} | General Cars`} description={v.overview[locale]} />
+      <SEO title={`${v.brand} ${v.model} ${v.year} | General cars`} description={v.overview[locale]} />
       <div className="container-px mx-auto max-w-7xl pt-6">
         <Link to="/catalog" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"><ArrowLeft className="h-4 w-4" />{t.detail.backToCatalog}</Link>
       </div>

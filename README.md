@@ -1,6 +1,6 @@
-# General Cars
+# General cars
 
-General Cars is a premium car dealership platform for browsing, filtering, and trading vehicles.
+General cars is a premium car dealership platform for browsing, filtering, and trading vehicles.
 
 ## Development
 

@@ -7,7 +7,7 @@ export default function Contact() {
   const { t, locale } = useLocale();
   return (
     <>
-      <SEO title={`${t.contact.title} | General Cars`} description={t.contact.sub} />
+      <SEO title={`${t.contact.title} | General cars`} description={t.contact.sub} />
       <section className="bg-primary text-white">
         <div className="container-px mx-auto max-w-7xl py-12 md:py-16">
           <h1 className="text-3xl md:text-4xl font-semibold">{t.contact.title}</h1>

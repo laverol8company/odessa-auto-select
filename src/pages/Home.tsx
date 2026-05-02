@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <>
-      <SEO title={`General Cars | ${t.home.heroTitle}`} description={t.home.heroSub} />
+      <SEO title={`General cars | ${t.home.heroTitle}`} description={t.home.heroSub} />
 
       {/* ══════════════ HERO ══════════════ */}
       <section className="relative bg-primary text-white overflow-hidden min-h-[600px] md:min-h-[720px] flex items-center">

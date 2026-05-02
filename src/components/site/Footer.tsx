@@ -12,7 +12,7 @@ export function Footer() {
         <div className="md:col-span-4 space-y-4">
           <div className="flex items-center gap-2 mb-4">
             <span className="grid place-items-center h-8 w-8 rounded-full bg-gradient-to-tr from-white/10 to-white/5 border border-white/20 text-white font-bold text-xs shadow-[0_0_15px_rgba(255,255,255,0.1)]">GC</span>
-            <span className="font-semibold text-white text-lg tracking-tight">General Cars</span>
+            <span className="font-semibold text-white text-lg tracking-tight">General cars</span>
           </div>
           <p className="text-sm leading-relaxed text-white/70">{t.footer.desc}</p>
           <LanguageSwitcher variant="dark" />
@@ -53,7 +53,7 @@ export function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-px mx-auto max-w-7xl py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-white/50">
-          <p>© {new Date().getFullYear()} General Cars v2. {t.footer.rights}</p>
+          <p>© {new Date().getFullYear()} General cars v2. {t.footer.rights}</p>
           <div className="flex items-center gap-4">
             <Link to="/privacy" className="hover:text-white">{t.footer.privacy}</Link>
             <Link to="/terms" className="hover:text-white">{t.footer.terms}</Link>

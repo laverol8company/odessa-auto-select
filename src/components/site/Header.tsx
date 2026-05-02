@@ -14,9 +14,17 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
 
-  const links = [
+  const desktopLinks = [
     { to: "/catalog", label: t.nav.buyCar },
     { to: "/sell-your-car", label: t.nav.sell },
+    { to: "/contact", label: t.nav.contact },
+    { to: "/about", label: t.nav.about },
+  ];
+
+  const mobileLinks = [
+    { to: "/catalog", label: t.nav.buyCar },
+    { to: "/sell-your-car", label: t.nav.sell },
+    { to: "/favorites", label: t.nav.favorites },
     { to: "/contact", label: t.nav.contact },
     { to: "/about", label: t.nav.about },
   ];
@@ -34,14 +42,16 @@ export function Header() {
           <span className="font-semibold tracking-tight text-lg text-white">General cars</span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-0 lg:gap-1 lg:mx-auto">
-          {links.map((l) => (
+        <nav className="hidden lg:flex items-center gap-0 lg:gap-1 lg:mx-auto bg-white/5 rounded-full px-2 py-1 backdrop-blur-md border border-white/10">
+          {desktopLinks.map((l) => (
             <Link
               key={l.to + l.label}
               to={l.to}
               className={cn(
-                "px-2 lg:px-3 py-2 text-[13px] lg:text-sm whitespace-nowrap rounded-md transition-colors text-white/80 hover:text-white hover:bg-white/5",
-                isActive(l.to) && "text-white bg-white/10",
+                "px-3 lg:px-4 py-2 text-[13px] lg:text-sm font-medium whitespace-nowrap rounded-full transition-all duration-300",
+                isActive(l.to) 
+                  ? "bg-white text-primary shadow-sm" 
+                  : "text-white/80 hover:text-white hover:bg-white/10",
               )}
             >
               {l.label}
@@ -73,38 +83,40 @@ export function Header() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-[88vw] sm:w-96 p-0 bg-primary text-primary-foreground border-white/10">
-            <div className="flex items-center justify-between p-5 pt-6 pb-4 border-b border-white/10">
+            <div className="flex items-center p-5 pt-6 pb-4 border-b border-white/10">
               <span className="flex items-center gap-2 shrink-0">
                 <span className="grid place-items-center h-8 w-8 rounded-full bg-gradient-to-tr from-white/10 to-white/5 border border-white/20 text-white font-bold text-xs">GC</span>
                 <span className="font-semibold tracking-tight text-lg text-white">General cars</span>
               </span>
-              <button onClick={() => setOpen(false)} className="p-2 -mr-2 text-white/70 hover:text-white transition-colors" aria-label={t.common.close}>
-                <X className="h-5 w-5" />
-              </button>
             </div>
-            <nav className="p-3 flex flex-col gap-1">
-              <Link to="/catalog" onClick={() => setOpen(false)} className={cn("flex items-center px-4 py-3.5 text-[15px] font-medium rounded-xl text-white/80 hover:bg-white/5 hover:text-white transition-colors", isActive("/catalog") && "bg-white/10 text-white")}>
-                {t.nav.buyCar}
-              </Link>
-              <Link to="/sell-your-car" onClick={() => setOpen(false)} className={cn("flex items-center px-4 py-3.5 text-[15px] font-medium rounded-xl text-white/80 hover:bg-white/5 hover:text-white transition-colors", isActive("/sell-your-car") && "bg-white/10 text-white")}>
-                {t.nav.sell}
-              </Link>
-              <Link to="/favorites" onClick={() => setOpen(false)} className="flex items-center justify-between px-4 py-3.5 text-[15px] font-medium rounded-xl text-white/80 hover:bg-white/5 hover:text-white transition-colors">
-                <span className="flex items-center gap-2.5"><Heart className="h-4 w-4" /> {t.nav.favorites}</span>
-                {count > 0 && <span className="inline-flex items-center justify-center rounded-full bg-favorite text-white h-5 min-w-5 px-1.5 text-[10px] font-bold shadow-sm">{count}</span>}
-              </Link>
-              <Link to="/contact" onClick={() => setOpen(false)} className={cn("flex items-center px-4 py-3.5 text-[15px] font-medium rounded-xl text-white/80 hover:bg-white/5 hover:text-white transition-colors", isActive("/contact") && "bg-white/10 text-white")}>
-                {t.nav.contact}
-              </Link>
-              <Link to="/about" onClick={() => setOpen(false)} className={cn("flex items-center px-4 py-3.5 text-[15px] font-medium rounded-xl text-white/80 hover:bg-white/5 hover:text-white transition-colors", isActive("/about") && "bg-white/10 text-white")}>
-                {t.nav.about}
-              </Link>
-            </nav>
-            <div className="p-5 border-t border-white/10 space-y-4">
-              <LanguageSwitcher variant="dark" className="w-full justify-center" />
-              <Button asChild variant="cta" className="w-full glow-cta rounded-xl py-6" onClick={() => setOpen(false)}>
-                <Link to="/catalog">{t.nav.headerCta}</Link>
-              </Button>
+            <div className="flex flex-col h-full overflow-y-auto pb-6">
+              <nav className="p-4 space-y-2">
+                {mobileLinks.map((l) => (
+                  <Link
+                    key={l.to + l.label}
+                    to={l.to}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "flex items-center px-4 py-3.5 text-base rounded-2xl transition-all duration-300 active:scale-95 group",
+                      isActive(l.to) 
+                        ? "bg-white/15 text-white font-medium shadow-[0_4px_20px_-5px_rgba(255,255,255,0.1)]" 
+                        : "text-white/80 hover:bg-white/5 hover:text-white"
+                    )}
+                  >
+                    {l.to === '/favorites' && <Heart className="mr-3 h-5 w-5 text-white/70 group-hover:text-white transition-colors" />}
+                    {l.label}
+                    {l.to === '/favorites' && count > 0 && (
+                      <span className="ml-auto inline-flex items-center justify-center rounded-full bg-white text-primary h-5 min-w-5 px-1.5 text-[11px] font-bold shadow-sm">{count}</span>
+                    )}
+                  </Link>
+                ))}
+              </nav>
+              <div className="p-4 mt-auto space-y-5 border-t border-white/10">
+                <LanguageSwitcher variant="dark" className="w-full justify-center py-2.5" />
+                <Button asChild variant="cta" className="w-full h-12 text-base font-medium rounded-xl shadow-[0_8px_30px_-5px_rgba(255,255,255,0.2)] active:scale-95 transition-all">
+                  <Link to="/catalog" onClick={() => setOpen(false)}>{t.nav.headerCta}</Link>
+                </Button>
+              </div>
             </div>
           </SheetContent>
         </Sheet>

@@ -15,7 +15,7 @@ export default function Favorites() {
 
   return (
     <>
-      <SEO title={`${t.favorites.title} | General Cars`} description={t.favorites.sub} />
+      <SEO title={`${t.favorites.title} | General cars`} description={t.favorites.sub} />
       <section className="bg-primary text-white">
         <div className="container-px mx-auto max-w-7xl py-12 md:py-16">
           <h1 className="text-3xl md:text-4xl font-semibold">{t.favorites.title}</h1>

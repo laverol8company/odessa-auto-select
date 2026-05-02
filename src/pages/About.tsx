@@ -6,7 +6,7 @@ export default function About() {
   const { t } = useLocale();
   return (
     <>
-      <SEO title={`${t.about.title} | General Cars`} description={t.about.copy} />
+      <SEO title={`${t.about.title} | General cars`} description={t.about.copy} />
       <section className="bg-primary text-white">
         <div className="container-px mx-auto max-w-7xl py-16 md:py-24">
           <h1 className="text-3xl md:text-5xl font-semibold max-w-3xl tracking-tight">{t.about.title}</h1>

@@ -6,7 +6,7 @@ export default function TradeIn() {
   const { t } = useLocale();
   return (
     <>
-      <SEO title={`${t.trade.title} | General Cars`} description={t.trade.sub} />
+      <SEO title={`${t.trade.title} | General cars`} description={t.trade.sub} />
       <section className="bg-primary text-white">
         <div className="container-px mx-auto max-w-7xl py-12 md:py-16">
           <h1 className="text-3xl md:text-4xl font-semibold max-w-3xl">{t.trade.title}</h1>

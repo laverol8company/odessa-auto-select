@@ -5,30 +5,45 @@ import { Languages } from "lucide-react";
 export function LanguageSwitcher({ className, variant = "light" }: { className?: string; variant?: "light" | "dark" }) {
   const { locale, setLocale } = useLocale();
   const dark = variant === "dark";
+  
+  const langs = [
+    { code: "en", label: "EN" },
+    { code: "ua", label: "UA" },
+    { code: "ro", label: "RO" },
+  ] as const;
+
   return (
     <div
       className={cn(
-        "inline-flex items-center rounded-full border p-1 text-sm font-medium transition-all shadow-sm",
-        dark ? "border-white/20 bg-white/5" : "border-border/60 bg-muted/30",
+        "inline-flex items-center rounded-2xl border p-1 font-medium transition-all duration-300",
+        dark ? "border-white/10 bg-white/5 backdrop-blur-md" : "border-border bg-muted/50",
         className,
       )}
       role="group"
       aria-label="Language"
     >
-      {(["ro", "uk", "en"] as const).map((l) => (
+      {langs.map(({ code, label }) => (
         <button
-          key={l}
+          key={code}
           type="button"
-          onClick={() => setLocale(l)}
-          aria-pressed={locale === l}
+          onClick={() => setLocale(code as any)}
+          aria-pressed={locale === code}
           className={cn(
-            "relative rounded-full px-3 py-1.5 transition-all duration-300 uppercase tracking-widest font-bold text-[11px]",
-            locale === l
-              ? dark ? "bg-white text-primary shadow-sm" : "bg-primary text-primary-foreground shadow-sm"
-              : dark ? "text-white/60 hover:text-white hover:bg-white/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50",
+            "relative rounded-xl px-3 py-1.5 text-sm transition-all duration-300 active:scale-95 z-10",
+            locale === code
+              ? dark ? "text-primary shadow-md" : "text-primary-foreground shadow-sm"
+              : dark ? "text-white/60 hover:text-white hover:bg-white/5" : "text-muted-foreground hover:text-foreground hover:bg-black/5",
           )}
         >
-          {l === "uk" ? "ua" : l}
+          {locale === code && (
+            <span 
+              className={cn(
+                "absolute inset-0 rounded-xl -z-10 transition-all duration-300", 
+                dark ? "bg-white" : "bg-primary"
+              )} 
+            />
+          )}
+          {label}
         </button>
       ))}
     </div>

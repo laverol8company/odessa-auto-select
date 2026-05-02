@@ -13,8 +13,9 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(() => {
     if (typeof window === "undefined") return "en";
     const stored = localStorage.getItem("locale") as Locale | null;
-    if (stored === "en" || stored === "uk") return stored;
+    if (stored === "en" || stored === "uk" || stored === "ro") return stored;
     const nav = navigator.language?.toLowerCase() ?? "";
+    if (nav.startsWith("ro")) return "ro";
     return nav.startsWith("uk") ? "uk" : "en";
   });
 
@@ -38,7 +39,7 @@ export function useLocale() {
 
 export function formatPrice(value: number, locale: Locale) {
   try {
-    return new Intl.NumberFormat(locale === "uk" ? "uk-UA" : "en-US", {
+    return new Intl.NumberFormat(locale === "uk" ? "uk-UA" : locale === "ro" ? "ro-RO" : "en-US", {
       style: "currency",
       currency: "USD",
       maximumFractionDigits: 0,
@@ -50,7 +51,7 @@ export function formatPrice(value: number, locale: Locale) {
 
 export function formatNumber(value: number, locale: Locale) {
   try {
-    return new Intl.NumberFormat(locale === "uk" ? "uk-UA" : "en-US").format(value);
+    return new Intl.NumberFormat(locale === "uk" ? "uk-UA" : locale === "ro" ? "ro-RO" : "en-US").format(value);
   } catch {
     return value.toLocaleString();
   }
